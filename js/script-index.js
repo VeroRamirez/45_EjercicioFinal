@@ -3,6 +3,7 @@ $(document).ready( function(){
 	//La variable "recipesArray" esta declarada en el archivo "data/recipes.js"
 	renderHighlightedRecipes(recipesArray);
     printNews();
+    renderActivities(activities);
 });
 
 function printNews(){
@@ -34,34 +35,6 @@ function renderHighlightedRecipes(recipesArray) {
 * Aqui se tiene que crear el HTML que esta en el 
 * archivo "templates/templates-recipe.html"
 */
-function renderPet(pet) {
-    console.log('Pintando una mascota: ',pet);
-    
-    var li = $('<li></li>');
-    li.addClass('card');
-    
-    var img = $('<img/>');
-    img.attr('src',pet.mainPicture);
-    
-    var pName = $('<p></p>');
-    pName.text(pet.name);
-    
-    var pAge = $('<p></p>');
-    pAge.text(pet.age.number);
-    
-    var spanAge = $('<span></span>');
-    spanAge.text(pet.age.type);
-    
-    li.append(spanAge);
-    li.append(img);
-    li.append(pName);
-    li.append(pAge);
-    console.log(li);
-    //pintarlos en la pantalla
-    $('#petLi').append(li);
-}
-
-
 function renderRecipe(recipe) {
 
     var item = $("<a class='item-recipe' href='#'></a>");
@@ -74,7 +47,7 @@ function renderRecipe(recipe) {
     var bookmarks = $("<span class='bookmarks-recipe'></span>");
     var icon = $("<span class='icon-bookmark'></span> ");
     var img= $("<img/>");
-    img.attr('src',recipe.source.url);
+    img.attr('src',"img/recipes/320x350/"+recipe.name+".jpg");
     console.log(recipe);
    
     item.append(attribution);
@@ -87,21 +60,6 @@ function renderRecipe(recipe) {
     
     
     $('.list-recipes').append(item);
-
-    
-   /* <a class='item-recipe' href='#'>
-  <span class='attribution'>
-    <span class='title-recipe'> TITULO DE LA RECETA (ATRIBUTO "title" ) </span>
-    <span class='metadata-recipe'>
-      <span class='author-recipe'> NOMBRE DEL AUTO DE LA RECETA (ATRIBUTO "source.name") </span>
-      <span class='bookmarks-recipe'>
-        <span class='icon-bookmark'></span> 
-      </span>
-    </span>
-  </span>
-
-  <img src="URL DE LA IMAGEN" />
-</a>*/
 }
 
 
@@ -110,7 +68,16 @@ function renderRecipe(recipe) {
 * Función que se encarga de pintar todas las actividades
 */
 function renderActivities(activitiesArray) {
-	console.log('Activities: ', activitiesArray);
+      /*
+    Crea una validación, si el arreglo activitiesArray contiene mas de 0 objetos, entonces oculta el DIV 
+    con clase wrapper-message.
+    */
+    if(activitiesArray.length>0){
+        $('wrapper-message').hide();
+    }
+    $.each(activitiesArray, function(index, value){
+        renderActivity(value);
+    });
 }
 
 /*
